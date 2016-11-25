@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <script src="js/libs/jquery.min.js"></script>
+    <script src="js/libs/bootstrap.js"></script>
+    <script src="js/libs/bootstrap-datepicker.js"></script>
+</head>
+<body>
+
+<div class="container" style="width:500px;">
+    <h3>input</h3>
+    <input type="text" value="09-09-2016" class="date" id="inp" data-date-autoclose="true">
+    <hr>
+
+    <h3>bootstrap component</h3>
+    <div class="input-group date" id="component">
+        <input type="text" class="form-control">
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+    </div>
+    <hr>
+
+    <h3>date-range</h3>
+    <div class="input-group input-daterange">
+        <input type="text" class="form-control" name="start">
+        <span class="input-group-addon">to</span>
+        <input type="text" class="form-control" name="end">
+    </div>
+    <hr>
+
+    <h3>inline or embedded 嵌入</h3>
+    <div id="datepicker" data-date="12/03/2012"></div>
+    <input type="hidden" id="my_hidden_input">
+</div>
+
+<script>
+    //input     (用属性data-provide="datepicker"可以调用)
+    $('#inp').datepicker({
+        autoclose:true,      //选择完成后自动关闭
+        beforeShowDay:function(Date){
+//            console.log(Date);
+        },
+        beforeShowMonth:function(Month){
+//            console.log(Month);
+        },
+        beforeShowYear:function(year){
+//            console.log(year);
+        },
+        beforeShowDecade:function(decade){
+//            console.log(decade);
+        },
+        beforeShowCentury:function(century){
+//            console.log(century);
+        }
+    });
+
+    //bootstrap component
+    $('#component').datepicker({
+        calendarWeeks:true,             //是否显示第几周,  默认false
+        clearBtn:true,                  //是否显示清除按钮,     默认false
+        container:'body',               //用于装弹出框的容器
+        datesDisabled:'05-02-2016',     //禁用某一天,或某几天(mm-dd-yyyy)
+        daysOfWeekDisabled:[0,6],       //禁用周六日
+        daysOfWeekHighlighted:'1',      //周几高亮
+        disableTouchKeyboard:false,     //是否在移动设备上显示键盘
+        toggleActive: true,              //选择同一个日期切换状态(多选默认开启)
+        defaultViewDate: {year: 2016, month:7, day: 25}           //默认显示的日期view
+
+    });
+
+    //date-range
+    $('.input-daterange input').each(function () {
+        $(this).datepicker({
+            multidate:true,
+            keepEmptyValues:true
+        });
+    });
+
+    //嵌入
+    $('#datepicker').datepicker();
+    $('#datepicker').on("changeDate", function () {
+        $('#my_hidden_input').val(
+                $('#datepicker').datepicker('getFormattedDate')
+        );
+    });
+</script>
+
+</body>
+</html>

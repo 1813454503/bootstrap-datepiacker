@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <script src="js/libs/jquery.min.js"></script>
+    <script src="js/libs/bootstrap.js"></script>
+    <script src="js/libs/moment.js"></script>
+    <script src="js/libs/bootstrap-datepicker.js"></script>
+</head>
+<body>
+<div class="input-group input-daterange">
+    <input type="text" class="form-control date-start" name="start" placeholder="请选择开始日期" readonly="readonly">
+    <span class="input-group-addon">到</span>
+    <input type="text" class="form-control date-end" name="end" placeholder="请选择结束日期" readonly="readonly">
+</div>
+
+
+<input type="button" value="test">
+<script>
+    var oStartDate='',
+         oEndDate='';
+    $('.date-start')
+            .datepicker({
+                autoclose:true,
+                todayHighlight:true,
+                format:'dd-mm-yyyy'
+            })
+            .on('changeDate', function (ev) {
+                console.log(ev.date.getTime());
+                if(oEndDate==''){
+                    $('.date-end').datepicker('setStartDate',ev.date);
+                }else{
+                    if (ev.date.valueOf() > oEndDate.valueOf()) {
+                        $('.date-end').datepicker('setStartDate',ev.date);
+                    }
+                }
+            });
+    $('.date-end')
+            .datepicker({
+                autoclose:true,
+                todayHighlight: true,
+                format:'dd-mm-yyyy'
+            })
+            .on('changeDate', function (ev) {
+                if(oStartDate==''){
+                    $('.date-start').datepicker('setEndDate',ev.date);
+                }else{
+                    if (ev.date.valueOf() < oStartDate.valueOf()) {
+                        $('.date-start').datepicker('setEndDate',ev.date);
+                    }
+                }
+            });
+
+    $('input[type=button]').click(function(){
+        console.log($('input[name=start]').val()+'到'+$('input[name=end]').val());
+    });
+
+</script>
+</body>
+</html>
